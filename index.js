@@ -101,6 +101,15 @@ var term;
         help: function(cmd) {
             term.echo(`Available commands: ${Object.keys(commands).join(', ')}`);
         },
+        list: function (cmd){
+            var output = [
+                "Convert Number to string",
+                "Convert pdf to text"
+            ]
+            if (output.length) {
+                term.echo(output.join('\n'));
+            }
+        },
         mkdir: function(cmd) {
             term.pause();
             mkdir(cmd.args[0]).then(term.resume);
@@ -250,16 +259,20 @@ var term;
             if (commands[cmd.name]) {
                 commands[cmd.name].call(term, cmd);
             } else {
-                term.error('Command not found');
+                term.resume();
+                //term.error('Command not found');
+
             }
         }
     }, {
-        greetings: 'Fake Linux Terminal\n',
+        // greetings: 'PoLoShell\n',
+        greetings: 'PoLoShell v1 is text to software solution\nplease describe in few sentence your expectation, it will by compiled\n',
         prompt: function() {
             return [
-                color('green', 'user&#64;example.com'),
-                ':',
-                color('blue', cwd),
+                // color('green', '&#64;apidsl'),
+                // color('green', 'apidsl'),
+                color('green', 'text-to-software'),
+                // color('yellow', cwd),
                 '$ '
             ].join('');
         },
