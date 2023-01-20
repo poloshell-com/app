@@ -266,7 +266,7 @@ var term;
         }
     }, {
         // greetings: 'PoLoShell\n',
-        greetings: 'PoLoShell v1 is text to software solution\nplease describe in few sentence your expectation, it will by compiled\n',
+        greetings: 'PoLoShell is text-to-software solution\nplease describe in few sentence your expectation, it will by compiled\n',
         prompt: function() {
             return [
                 // color('green', '&#64;apidsl'),
