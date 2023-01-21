@@ -11,7 +11,7 @@
         :root {
             --color: yellow;
             --background: #000;
-            --size: 1.3;
+            --size: 1.2;
             --animation: terminal-blink;
         }
 
@@ -3380,6 +3380,15 @@
         "What should do the template, describe please",
     ];
 
+
+    var output3question = [
+        "Choose type of software, you want build",
+        "Are you happy with the result? What should be changed",
+        "Are you happy with the result? What should be changed",
+        "Are you happy with the result? What should be changed",
+        "Are you happy with the result? What should be changed",
+    ];
+
     var answer_type = [
         "number",
         "sentence",
@@ -3396,7 +3405,7 @@
     type = answer_type[0];
     var typec = color('white', type + ":");
     var typep = color('white', "answer as a " + type + ":");
-
+    var result = 0;
 
     jQuery(function ($, undefined) {
 
@@ -3430,7 +3439,7 @@
                     // if type !== number new Error()
 
                     try {
-                        var result = __EVAL(command);
+                        result = __EVAL(command);
 
                         if (result !== undefined) {
                             type = answer_type[result];
@@ -3449,20 +3458,18 @@
                             }
                         }
                     } catch (e) {
+
                         //typec = color('white', "info: ");
                         typec = color('white', 'output: ');
                         //typec = color('white', '> ');
                         this.echo(typec + "Please wait a few second and go to url:");
-                        this.pause();
                         app = Base64.encode(command);
-
                         //var app = "#dfssdg"
-
                         var urls = `http://${subdomain}.poloshell.com/${app}`
                         typec = color('white', "url: ")
-
                         this.echo(typec + urls);
-
+                        //this.pause();
+                        question = output3question[result];
                         //this.error(new String(e));
                     }
 
