@@ -136,31 +136,34 @@
     }
 }</style>
 
-<style>.github-corner:hover .octo-arm {
-    animation: octocat-wave 560ms ease-in-out
-}
+<style>
 
-@keyframes octocat-wave {
-    0%, 100% {
-        transform: rotate(0)
-    }
-    20%, 60% {
-        transform: rotate(-25deg)
-    }
-    40%, 80% {
-        transform: rotate(10deg)
-    }
-}
-
-@media (max-width: 500px) {
     .github-corner:hover .octo-arm {
-        animation: none
-    }
-
-    .github-corner .octo-arm {
         animation: octocat-wave 560ms ease-in-out
     }
-}</style>
+
+    @keyframes octocat-wave {
+        0%, 100% {
+            transform: rotate(0)
+        }
+        20%, 60% {
+            transform: rotate(-25deg)
+        }
+        40%, 80% {
+            transform: rotate(10deg)
+        }
+    }
+
+    @media (max-width: 500px) {
+        .github-corner:hover .octo-arm {
+            animation: none
+        }
+
+        .github-corner .octo-arm {
+            animation: octocat-wave 560ms ease-in-out
+        }
+    }
+</style>
 <main>
 
 
@@ -3417,32 +3420,33 @@
     ];
 
     var answer2type = [
-        "numerical",
-        "string",
-        "string",
-        "string",
-        "string",
-        "string",
+        "Number",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
     ];
 
     var answer3type = [
-        "numerical",
-        "Bool,string",
-        "Bool,string",
-        "Bool,string",
-        "Bool,string",
-        "Bool,string",
+        "Number",
+        "Bool, Text",
+        "Bool, Text",
+        "Bool, Text",
+        "Bool, Text",
+        "Bool, Text",
     ];
 
+    const REPLY = "- reply by ";
     var prompt;
     var question;
     question = output2question[0];
     var type;
     type = answer2type[0];
     var typec = color('white', type + ":");
-    var typep = color('white', "answer " + type + ":");
+    var typep = color('white', REPLY + type + ":");
     var result = 0;
     var step = 0;
+    var value;
 
     jQuery(function ($, undefined) {
 
@@ -3477,8 +3481,6 @@
                     // if type !== number new Error()
 
                     step++;
-
-
                     try {
                         result = __EVAL(command);
 
@@ -3489,29 +3491,33 @@
                             } else {
                                 type = answer2type[result];
                             }
+                            typep = color('white', REPLY + type + ":");
 
-                            typep = color('white', "answer " + type + ":");
                             if (typeof result === 'number') {
                                 subdomain = subdomains[result]
                                 //subdomain = "test"
                                 question = output2question[result];
                                 //this.echo(new String(result));
-                                typec = color('white', 'output info: ');
+                                typec = color('white', 'info: ')
+                                value = color('blue', output[result]);
                                 //typec = color('white', '> ');
-                                this.echo(typec + output[result]);
+                                this.echo(typec + value);
                             }
                         }
                     } catch (e) {
 
                         //typec = color('white', "info: ");
-                        typec = color('white', 'output info: ');
+                        typec = color('white', 'info: ');
+                        value = color('blue', 'Please wait a few second and go to url:');
                         //typec = color('white', '> ');
-                        this.echo(typec + "Please wait a few second and go to url:");
+                        this.echo(typec + value);
                         app = Base64.encode(command);
                         //var app = "#dfssdg"
                         var urls = `http://${subdomain}.poloshell.com/${app}`
-                        typec = color('white', "output url: ")
-                        this.echo(typec + urls);
+                        typec = color('white', "url: ")
+                        value = color('blue', urls)
+                        this.echo(typec + value);
+
                         //this.pause();
                         question = output3question[result];
                         type = answer3type[result];
@@ -3550,7 +3556,7 @@
 
     function color(name, string) {
         var colors = {
-            blue: '#55f',
+            blue: '#77f',
             green: '#4d4',
             grey: '#999',
             red: '#A00',
