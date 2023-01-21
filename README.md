@@ -1,19 +1,6 @@
 #  https://app.poloshell.com/
 
 
-
-## Old version
-![Poloshell3](poloshell3.png)
-
-## dialogmap
-![dialogmap](dialogmap.png)
-
-## grep
-![grep](grep.png)
-
-[GitHub Corners](https://tholman.com/github-corners/)
-
-
 > This is example of using [jQuery Terminal](https://terminal.jcubic.pl/) to create Fake Linux System. It's work in progress. Check [GitHub Repo](https://github.com/jcubic/fake-linux-terminal) for more information.
 >
 > You can call it a fake command line website, that emulates real GNU/Linux system.
