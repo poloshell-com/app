@@ -3355,25 +3355,28 @@
 
     var outputno = [
         "0. help",
-        "1. api service",
-        "2. web page",
-        "3. html template",
-        "4. vue template"
+        "1. API service",
+        "2. WEB page",
+        "3. VUE component",
+        // "4. react template",
+        // "5. APIDSL"
     ];
 
     var output = [
         "help",
         "API service",
         "Web page",
-        "Html template",
-        "Vue template"
+        "Vue component",
+        // "Vue template",
+        // "APIDSL"
     ];
 
     var output2question = [
         "Choose type of software, you want build",
         "What should do the API, describe please",
-        "What should do the program, describe please",
         "What should do the page, describe please",
+        "What should do the component, describe please",
+        "What should do the program, describe please",
         "What should do the template, describe please",
     ];
 
@@ -3392,13 +3395,14 @@
     var type;
     type = answer_type[0];
     var typec = color('white', type + ":");
-    var typep = color('white', type + ":");
+    var typep = color('white', "answer as a " + type + ":");
 
 
     jQuery(function ($, undefined) {
 
         prompt = function () {
             var prompts = [
+                color('white', "question: "),
                 color('green', question),
                 color('yellow', "?"),
                 color('green', " "),
@@ -3430,7 +3434,7 @@
 
                         if (result !== undefined) {
                             type = answer_type[result];
-                            typep = color('white', type + ":");
+                            typep = color('white', "answer as a " + type + ":");
 
                             console.log(result);
                             console.log(typeof result);
@@ -3439,14 +3443,15 @@
                                 //subdomain = "test"
                                 question = output2question[result];
                                 //this.echo(new String(result));
-                                //typec = color('white', 'output: ');
-                                typec = color('white', '> ');
+                                typec = color('white', 'output: ');
+                                //typec = color('white', '> ');
                                 this.echo(typec + output[result]);
                             }
                         }
                     } catch (e) {
                         //typec = color('white', "info: ");
-                        typec = color('white', '> ');
+                        typec = color('white', 'output: ');
+                        //typec = color('white', '> ');
                         this.echo(typec + "Please wait a few second and go to url:");
                         this.pause();
                         app = Base64.encode(command);
@@ -3468,14 +3473,19 @@
             }
         }, {
             greetings: function () {
+                var EOL = '\n# ';
                 return [
-                    color('grey', 'PoLoShell is text-to-software solution\n'),
-                    color('grey', output2question[0]),
+                    color('grey', '#!/bin/usr/dialogmap'),
+                    // color('grey', '#!/bin/usr/dialogschema'),
+                    color('grey', EOL),
+                    color('grey', 'PoLoShell is text-to-software solution.'),
+                    color('grey', EOL),
+                    color('grey', output2question[0] + ":1"),
+                    color('grey', EOL),
+                    color('grey', outputno.join(EOL)),
                     color('grey', '\n'),
-                    color('yellow', outputno.join('\n')),
-                    color('grey', '\n'),
-                    color('grey', 'After You selected, describe in a few sentence your expectations\n'),
-                    color('grey', 'It will by deployed on personalized url for You!\n'),
+                    color('grey', '# After You selected, describe in a few sentence your expectations\n'),
+                    color('grey', '# It will by deployed on personalized url for You!\n'),
                     " ",
                 ].join('');
             },
