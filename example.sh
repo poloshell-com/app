@@ -8,29 +8,12 @@
 # After You selected, describe in a few sentence your expectations
 # It will by deployed on personalized url for You!
 
-+ question Choose type of software, you want build?
-+ answer number: 1
-- output info: API service
-- question: What should do the API, describe please?
-- answer as number: fdsfdsfdsf f sdfsdfds
-- output info: Please wait a few second and go to url:
-- output url: http://text-to-api.poloshell.com/ZmRzZmRzZmRzZiBmIHNkZnNkZmRz
-question: Are you happy with the result? What should be changed?
-answer sentence: 2
-output info: Web page
+question: Choose type of software, you want build?
+- reply by Number: 2
+info: Web page
 question: What should do the page, describe please?
-answer Bool,Sentence: yes, ds afsgfd gdgsgdfggs
-
-
-question # Choose type of software, you want build?
-answer number # 1
-output info # API service
-question: What should do the API, describe please?
-answer sentence: fdsfdsfdsf f sdfsdfds
-output info: Please wait a few second and go to url:
-output url: http://text-to-api.poloshell.com/ZmRzZmRzZmRzZiBmIHNkZnNkZmRz
+- reply by Text: kljklf jgkljdklgjdfgj dg
+info: Please wait a few second and go to url:
+url: http://text-to-web.poloshell.com/a2xqa2xmIGpna2xqZGtsZ2pkZmdqIGRn
 question: Are you happy with the result? What should be changed?
-answer sentence: 2
-output info: Web page
-question: What should do the page, describe please?
-answer Bool,Sentence: yes, ds afsgfd gdgsgdfggs
+- reply by Text:

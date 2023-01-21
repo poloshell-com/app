@@ -3436,6 +3436,15 @@
         "Bool, Text",
     ];
 
+    var types = [
+        "Number",
+        "Bool",
+        "Text",
+        "input",
+        "output",
+        "url",
+    ];
+
     const REPLY = "- reply by ";
     var prompt;
     var question;
@@ -3472,7 +3481,7 @@
 
                 if (command === "help" || command === "0") {
                     this.echo(question);
-                    this.echo(outputs.join('\n'));
+                    this.echo(outputno.join('\n'));
                 } else {
 
                     // TODO object Dialogmap Sentence, Type, Question, Output
