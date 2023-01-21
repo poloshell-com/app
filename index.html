@@ -3445,14 +3445,16 @@
         "url",
     ];
 
-    const REPLY = "- reply by ";
+    const REPLY = "reply by ";
+    const INFO = '# ';
     var prompt;
     var question;
     question = output2question[0];
     var type;
     type = answer2type[0];
     var typec = color('white', type + ":");
-    var typep = color('white', REPLY + type + ":");
+    var typet = color('grey', INFO + REPLY + type);
+    var typep = color('yellow',"A:");
     var result = 0;
     var step = 0;
     var value;
@@ -3461,10 +3463,12 @@
 
         prompt = function () {
             var prompts = [
-                color('white', "question: "),
+                color('green', "Q: "),
                 color('green', question),
                 color('yellow', "?"),
                 color('green', " "),
+                '\n',
+                typet,
                 '\n',
                 typep,
                 " ",
@@ -3480,8 +3484,9 @@
                 console.log(command);
 
                 if (command === "help" || command === "0") {
-                    this.echo(question);
-                    this.echo(outputno.join('\n'));
+                    //this.echo(color('blue', INFO + question ));
+                    this.echo(color('grey', INFO + question ));
+                    this.echo(color('grey', INFO + outputno.join('\n' + INFO)));
                 } else {
 
                     // TODO object Dialogmap Sentence, Type, Question, Output
@@ -3500,24 +3505,26 @@
                             } else {
                                 type = answer2type[result];
                             }
-                            typep = color('white', REPLY + type + ":");
+                            //typep = color('white', REPLY + type + ":");
+                            //typep = color('white', INFO + REPLY + type + ":");
+                            typet = color('grey', INFO + REPLY + type);
+
 
                             if (typeof result === 'number') {
                                 subdomain = subdomains[result]
                                 //subdomain = "test"
                                 question = output2question[result];
                                 //this.echo(new String(result));
-                                typec = color('white', 'info: ')
-                                value = color('blue', output[result]);
-                                //typec = color('white', '> ');
+                                typec = color('grey', INFO)
+                                value = color('grey', output[result]);
                                 this.echo(typec + value);
                             }
                         }
                     } catch (e) {
 
                         //typec = color('white', "info: ");
-                        typec = color('white', 'info: ');
-                        value = color('blue', 'Please wait a few second and go to url:');
+                        typec = color('grey', INFO);
+                        value = color('grey', 'Please wait a few second and go to url:');
                         //typec = color('white', '> ');
                         this.echo(typec + value);
                         app = Base64.encode(command);
