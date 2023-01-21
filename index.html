@@ -3389,7 +3389,7 @@
         "Are you happy with the result? What should be changed",
     ];
 
-    var answer_type = [
+    var answer2type = [
         "number",
         "sentence",
         "sentence",
@@ -3398,14 +3398,24 @@
         "sentence",
     ];
 
+    var answer3type = [
+        "number",
+        "Bool,Sentence",
+        "Bool,Sentence",
+        "Bool,Sentence",
+        "Bool,Sentence",
+        "Bool,Sentence",
+    ];
+
     var prompt;
     var question;
     question = output2question[0];
     var type;
-    type = answer_type[0];
+    type = answer2type[0];
     var typec = color('white', type + ":");
-    var typep = color('white', "answer as a " + type + ":");
+    var typep = color('white', "answer " + type + ":");
     var result = 0;
+    var step = 0;
 
     jQuery(function ($, undefined) {
 
@@ -3434,25 +3444,32 @@
                     this.echo(outputs.join('\n'));
                 } else {
 
+                    // TODO object Dialogmap Sentence, Type, Question, Output
                     // TODO: check type of variable, show error when not correct
                     // if type !== sentence
                     // if type !== number new Error()
+
+                    step++;
+
 
                     try {
                         result = __EVAL(command);
 
                         if (result !== undefined) {
-                            type = answer_type[result];
-                            typep = color('white', "answer as a " + type + ":");
 
-                            console.log(result);
-                            console.log(typeof result);
-                            if (typeof result == 'number') {
+                            if(step > 1){
+                                type = answer3type[result];
+                            } else {
+                                type = answer2type[result];
+                            }
+
+                            typep = color('white', "answer " + type + ":");
+                            if (typeof result === 'number') {
                                 subdomain = subdomains[result]
                                 //subdomain = "test"
                                 question = output2question[result];
                                 //this.echo(new String(result));
-                                typec = color('white', 'output: ');
+                                typec = color('white', 'output info: ');
                                 //typec = color('white', '> ');
                                 this.echo(typec + output[result]);
                             }
@@ -3460,19 +3477,19 @@
                     } catch (e) {
 
                         //typec = color('white', "info: ");
-                        typec = color('white', 'output: ');
+                        typec = color('white', 'output info: ');
                         //typec = color('white', '> ');
                         this.echo(typec + "Please wait a few second and go to url:");
                         app = Base64.encode(command);
                         //var app = "#dfssdg"
                         var urls = `http://${subdomain}.poloshell.com/${app}`
-                        typec = color('white', "url: ")
+                        typec = color('white', "output url: ")
                         this.echo(typec + urls);
                         //this.pause();
                         question = output3question[result];
+                        type = answer3type[result];
                         //this.error(new String(e));
                     }
-
                 }
 
             } else {
