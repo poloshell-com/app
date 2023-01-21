@@ -1,17 +1,5 @@
 var term;
 (async function() {
-    /* TODO:
-     * $PATH
-     * process (stdin/stdout/stderr) (worker? ES Module) (allow backgroud jobs)
-       Posix API? open/read/write
-       Promise API for worker
-       main function - default export or API with callback
-
-     * BASH + cd, pwd, echo, history, pushd, popd, wait, source
-     * scripts in JavaSript or Bash in FS /bin cat,ls,less,more,mkdir,rmdir,rm,mv,touch,locate,find,grep,xargs,head,tail,diff,wget,zip,unzip
-     * Image files in ZIP
-     * Memory FS / reset on Init
-     */
 
     const { default: MemoryDB } = await import('./MemoryDB.js');
     let fs;
@@ -98,6 +86,13 @@ var term;
     // --------------------------------------------------------------
     window.cwd = '/';
     var commands = {
+
+        "?" : function(cmd) {
+            this.echo(` 1. text to api
+2. text to web
+3. text to vue 
+ `)
+        },
         help: function(cmd) {
             term.echo(`Available commands: ${Object.keys(commands).join(', ')}`);
         },
@@ -130,16 +125,7 @@ var term;
                 });
             }
         },
-        store: function(cmd) {
-            db.persistent(db_name);
-            localStorage.setItem('__fs__persistent', 1);
-        },
-        cat: function(cmd) {
-            read(cmd, (x) => term.echo(x, {newline: false}));
-        },
-        less: function(cmd) {
-            read(cmd, term.less.bind(term));
-        },
+
         ls: function(cmd) {
             var {options, args} = split_args(cmd.args);
             function filter(list) {
@@ -159,97 +145,7 @@ var term;
                 }
             });
         },
-        rm: function(cmd) {
-            var {options, args} = split_args(cmd.args);
 
-            var len = args.length;
-            if (len) {
-                term.pause();
-            }
-            args.forEach(arg => {
-                var path_name = path.resolve(cwd + '/' + arg);
-                fs.stat(path_name, (err, stat) => {
-                    if (err) {
-                        term.error(err);
-                    } else if (stat) {
-                        if (stat.isDirectory()) {
-                            if (options.match(/r/)) {
-                                rmDir(path_name);
-                            } else {
-                                term.error(`${path_name} is directory`);
-                            }
-                        } else if (stat.isFile()) {
-                            fs.unlink(path_name);
-                        } else {
-                            term.error(`${path_name} is invalid`)
-                        }
-                        if (!--len) {
-                            term.resume();
-                        }
-                    }
-                });
-            });
-        },
-        credits: function() {
-            this.echo(`
- [[!;;;;https://github.com/jcubic/jsvi]JSVI]
-   Copyright (C) 2006-2008 Internet Connection, Inc.
-   Copyright (C) 2013-2018 Jakub Jankiewicz
- [[!;;;;https://terminal.jcubic.pl]jQuery Terminal]
-   Copyright (C) 2011-2021 Jakub Jankiewicz
- [[!;;;;https://github.com/timoxley/wcwidth]wcwidth]
-   Copyright (c) 2012 by Jun Woong
- [[!;;;;https://prismjs.com/]PrismJS]
-   Copyright (c) 2012 Lea Verou
- [[!;;;;https://github.com/inexorabletash/polyfill]Keyboard Polyfill]
-   Copyright (c) 2018 Joshua Bell
- [[!;;;;https://github.com/jvilk/BrowserFS]BrowserFS]
-   Copyright (c) 2013, 2014, 2015, 2016, 2017 John Vilk and other BrowserFS contributors.
- `)
-        },
-        vi: function(cmd) {
-            var textarea = $('.vi');
-            var editor;
-            var fname = cmd.args[0];
-            term.focus(false);
-            if (fname) {
-                var path = resolve(fname);
-                function open(file) {
-                    // we need to replace < and & because jsvi is handling html tags
-                    // and don't work properly for raw text
-                    textarea.val(file.replace(/</g, '&lt;').replace(/&/g, '&amp;'));
-                    editor = window.editor = vi(textarea[0], {
-                        color: '#ccc',
-                        backgroundColor: '#000',
-                        onSave: function() {
-                            var file = textarea.val().replace(/&amp;/g, '&').replace(/&lt;/g, '<');
-                            fs.writeFile(path, file, function(err, wr) {
-                                if (err) {
-                                    term.error(err.message);
-                                }
-                            });
-                        },
-                        onExit: term.focus
-                    });
-                }
-                fs.stat(path, (err, stat) => {
-                    if (stat && stat.isFile()) {
-                        read(cmd, open, true);
-                    } else {
-                        var dir = path.replace(/[^\/]+$/, '');
-                        fs.stat(dir, (err, stat) => {
-                            if (stat && stat.isDirectory()) {
-                                open('')
-                            } else if (err) {
-                                term.error(err.message);
-                            } else {
-                                term.error(`${dir} directory don't exists`);
-                            }
-                        });
-                    }
-                });
-            }
-        }
     };
 
     // --------------------------------------------------------------
@@ -259,6 +155,7 @@ var term;
             if (commands[cmd.name]) {
                 commands[cmd.name].call(term, cmd);
             } else {
+
                 term.resume();
                 //term.error('Command not found');
 
@@ -273,7 +170,7 @@ var term;
                 // color('green', 'apidsl'),
                 color('green', 'text-to-software'),
                 // color('yellow', cwd),
-                '$ '
+                '? '
             ].join('');
         },
         completion: function(string, cb) {
@@ -323,6 +220,7 @@ var term;
             boot(await loadFile(files[0]));
         }
     });
+
     if (localStorage.getItem('__fs__persistent')) {
         boot();
     } else {
